@@ -1,37 +1,4 @@
-const extensionMap = new Map([
-    ["png", "PNG"],
-    ["mp3", "MP3"],
-    ["mp4", "MP4"],
-    ["webm", "WEBM"],
-    ["wav", "WAV"],
-    ["jpg", "JPG"]
-]);
-
-const getInputFormat = (formData) => {
-    const file = formData.get("file");
-    if (!(file instanceof File)) {
-        throw new Error("Выбран некорректный файл");
-    }
-
-    const filename = (file.name || "").toLowerCase();
-    const extension = filename.split('.').pop();
-    const mapped = extensionMap.get(extension);
-    if (!mapped) {
-        throw new Error("Неподдерживаемый формат файла");
-    }
-
-    return mapped;
-};
-
-const getOutputFormat = (formData) => {
-    const outputFormatRaw = formData.get("outputFormat");
-    const outputFormat = String(outputFormatRaw || "").toLowerCase();
-    if (!extensionMap.has(outputFormat)) {
-        throw new Error("Выбран некорректный формат для конвертации");
-    }
-
-    return extensionMap.get(outputFormat);
-};
+import { getInputFormat, getOutputFormat, processFileName} from './fileUtils.js'
 
 document.getElementById('fileUploadForm').addEventListener('submit', async function (event) {
     event.preventDefault();
@@ -47,8 +14,7 @@ document.getElementById('fileUploadForm').addEventListener('submit', async funct
 
         const inputFormat = getInputFormat(formData);
         const outputFormat = getOutputFormat(formData);
-        const filename = `${formData.get("file").name}.${outputFormat.toLowerCase()}`;
-        
+        const filename = processFileName(formData.get("file").name, outputFormat);
         formData.set('inputFormat', inputFormat);
         formData.set('outputFormat', outputFormat);
 
