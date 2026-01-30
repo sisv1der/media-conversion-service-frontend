@@ -4,13 +4,13 @@ const appendListItem = (list, value) => {
     list.appendChild(li);
 }
 
-const updateList = (list, items) => {
+export const updateList = (list, items) => {
     clearList(list);
 
     items.forEach(element => appendListItem(list, element));
 }
 
-const clearList = (list) => {
+export const clearList = (list) => {
     while (list.lastChild) {
         list.removeChild(list.lastChild);
     }

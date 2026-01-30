@@ -10,13 +10,13 @@ const getInputFormat = (filename) => {
     return formats[extension];
 }
 
-const getInputFormatFromFormData = (formData) => {
+export const getInputFormatFromFormData = (formData) => {
     const file = formData.get("file");
 
     return getInputFormatFromFile(file);
 };
 
-const getInputFormatFromFile = (file) => {
+export const getInputFormatFromFile = (file) => {
     if (!(file instanceof File)) {
         throw new Error("Выбран некорректный файл");
     }
@@ -25,7 +25,7 @@ const getInputFormatFromFile = (file) => {
     return getInputFormat(filename);
 }
 
-const getOutputFormat = (formData) => {
+export const getOutputFormat = (formData) => {
     const outputFormatRaw = formData.get("outputFormat");
     const outputFormat = String(outputFormatRaw || "").toLowerCase();
     if (!(outputFormat in formats)) {
@@ -35,13 +35,13 @@ const getOutputFormat = (formData) => {
     return formats[extension];
 };
 
-const processFilename = (file, outputFormat) => {
+export const processFilename = (file, outputFormat) => {
     const filename = (file.name || "").toLowerCase();
     const baseName = filename.includes('.') ? filename.substring(0, filename.lastIndexOf('.')) : filename;
     return `${baseName}.${outputFormat.toLowerCase()}`;
 };
 
-const downloadFile = (blob, filename) => {
+export const downloadFile = (blob, filename) => {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
