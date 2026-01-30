@@ -1,12 +1,6 @@
 import { formats } from './formats.js';
 
-const getInputFormat = (formData) => {
-    const file = formData.get("file");
-    if (!(file instanceof File)) {
-        throw new Error("Выбран некорректный файл");
-    }
-
-    const filename = (file.name || "").toLowerCase();
+const getInputFormat = (filename) => {
     const extension = filename.split('.').pop();
 
     if (!(extension in formats)) {
@@ -14,7 +8,22 @@ const getInputFormat = (formData) => {
     }
 
     return formats[extension];
+}
+
+const getInputFormatFromFormData = (formData) => {
+    const file = formData.get("file");
+
+    return getInputFormatFromFile(file);
 };
+
+const getInputFormatFromFile = (file) => {
+    if (!(file instanceof File)) {
+        throw new Error("Выбран некорректный файл");
+    }
+
+    const filename = (file.name || "").toLowerCase();
+    return getInputFormat(filename);
+}
 
 const getOutputFormat = (formData) => {
     const outputFormatRaw = formData.get("outputFormat");
@@ -27,7 +36,7 @@ const getOutputFormat = (formData) => {
     return formats[extension];
 };
 
-const processFileName = (file, outputFormat) => {
+const processFilename = (file, outputFormat) => {
     const filename = (file.name || "").toLowerCase();
     const baseName = filename.includes('.') ? filename.substring(0, filename.lastIndexOf('.')) : filename;
     return `${baseName}.${outputFormat.toLowerCase()}`;
