@@ -1,27 +1,19 @@
-const formatMap = new Map([
-    ["png", "PNG"],
-    ["mp3", "MP3"],
-    ["mp4", "MP4"],
-    ["webm", "WEBM"],
-    ["wav", "WAV"],
-    ["jpg", "JPG"]
-]);
-
-const getCompatibleFormats = (inputFormat) => {
-    switch (inputFormat) {
-        case "PNG":
-            return ["JPG"];
-        case "JPG":
-            return ["PNG"];
-        case "MP3":
-            return ["WAV"];
-        case "WAV":
-            return ["MP3"];
-        case "MP4":
-            return ["WEBM"];
-        case "WEBM":
-            return ["MP4"];
-        default:
-            return [];
-    }
+const formats = {
+    png: "PNG",
+    mp3: "MP3",
+    mp4: "MP4",
+    webm: "WEBM",
+    wav: "WAV",
+    jpg: "JPG"
 };
+
+const compatibleFormats = {
+    PNG: ['JPG'],
+    JPG: ['PNG'],
+    MP3: ['WAV'],
+    WAV: ['MP3'],
+    MP4: ['WEBM'],
+    WEBM: ['MP4']
+}
+
+const getCompatibleFormats = (inputFormat) => compatibleFormats[inputFormat.toUpperCase()] || [];

@@ -1,4 +1,4 @@
-import { formatMap } from './formats.js';
+import { formats } from './formats.js';
 
 const getInputFormat = (formData) => {
     const file = formData.get("file");
@@ -8,22 +8,23 @@ const getInputFormat = (formData) => {
 
     const filename = (file.name || "").toLowerCase();
     const extension = filename.split('.').pop();
-    const mapped = formatMap.get(extension);
-    if (!mapped) {
+
+    if (!(extension in formats)) {
         throw new Error("Неподдерживаемый формат файла");
     }
 
-    return mapped;
+    return formats[extension];
 };
 
 const getOutputFormat = (formData) => {
     const outputFormatRaw = formData.get("outputFormat");
     const outputFormat = String(outputFormatRaw || "").toLowerCase();
-    if (!formatMap.has(outputFormat)) {
+    if (!(outputFormat in formats)) {
         throw new Error("Выбран некорректный формат для конвертации");
     }
 
-    return extensionMap.get(outputFormat);
+
+    return formats[extension];
 };
 
 const processFileName = (file, outputFormat) => {
