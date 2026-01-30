@@ -13,4 +13,4 @@ const convertFile = async (formData) => {
     }
 
     return response.blob();
-}
+};
