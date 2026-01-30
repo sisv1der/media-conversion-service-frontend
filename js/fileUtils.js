@@ -32,7 +32,6 @@ const getOutputFormat = (formData) => {
         throw new Error("Выбран некорректный формат для конвертации");
     }
 
-
     return formats[extension];
 };
 
