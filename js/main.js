@@ -27,7 +27,7 @@ document.getElementById('fileUploadForm').addEventListener('submit', async funct
             console.error(err);
             alert(err.message || 'Произошла ошибка');    
         })
-        .finally( () => { 
+        .finally(() => { 
             if (submitBtn) submitBtn.disabled = false;
         });
 });
