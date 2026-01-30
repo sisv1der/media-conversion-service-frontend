@@ -3,8 +3,6 @@ import { convertFile } from './api.js'
 import { updateList, clearList } from './uiUtils.js'
 import { getCompatibleFormats } from './formats.js'
 
-const input = document.querySelector('input[type="file"]');
-
 const handleFileUpload = async (form) => {
     const formData = new FormData(form);
 
