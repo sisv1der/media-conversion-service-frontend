@@ -3,7 +3,7 @@ import { convertFile } from './api.js'
 import { updateList, clearList } from './uiUtils.js'
 import { getCompatibleFormats } from './formats.js'
 
-const handleFileSelect = (file, ul) => {
+export const handleFileSelect = (file, ul) => {
     const format = getInputFormatFromFile(file);
     const compatibleFormats = getCompatibleFormats(format);
     if (compatibleFormats.length === 0) {
@@ -14,7 +14,7 @@ const handleFileSelect = (file, ul) => {
     updateList(ul, compatibleFormats);
 }
 
-const handleFileUpload = async (form, div) => {
+export const handleFileUpload = async (form, div) => {
     const formData = new FormData(form);
     const inputFormat = getInputFormatFromFormData(formData);
     const outputFormat = getOutputFormat(div.dataset.selectedFormat);
