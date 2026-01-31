@@ -3,11 +3,10 @@ import { convertFile } from './api.js'
 import { updateList, clearList } from './uiUtils.js'
 import { getCompatibleFormats } from './formats.js'
 
-const handleFileUpload = async (form) => {
+const handleFileUpload = async (form, div) => {
     const formData = new FormData(form);
-
     const inputFormat = getInputFormatFromFormData(formData);
-    const outputFormat = getOutputFormat(formData);
+    const outputFormat = getOutputFormat(div.dataset.selectedFormat);
     const filename = processFilename(formData.get("file").name, outputFormat);
 
     formData.set('inputFormat', inputFormat);
@@ -25,8 +24,10 @@ document
         const form = event.target;
         const submitBtn = form.querySelector('[type="submit"]');
         if (submitBtn) submitBtn.disabled = true;
+        
+        const div = document.getElementById('selector');
 
-        handleFileUpload(form)
+        handleFileUpload(form, div)
             .catch(err => {
                 console.error(err);
                 alert(err.message || 'Произошла ошибка');    
@@ -62,3 +63,15 @@ document
             alert(err.message || 'Произошла ошибка');        
         }
     });
+
+document
+    .getElementById('selector')
+    .querySelector('ul')
+    .addEventListener('click', (event) => {
+        const li = event.target.closest('li');
+        if (!li) return;
+        const div = document.getElementById('selector');
+        
+        const format = li.dataset.format;
+        div.dataset.selectedFormat = format;
+    })

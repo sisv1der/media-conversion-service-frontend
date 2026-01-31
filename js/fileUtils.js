@@ -20,24 +20,24 @@ export const getInputFormatFromFile = (file) => {
     if (!(file instanceof File)) {
         throw new Error("Выбран некорректный файл");
     }
-
     const filename = (file.name || "").toLowerCase();
+
     return getInputFormat(filename);
 }
 
-export const getOutputFormat = (formData) => {
-    const outputFormatRaw = formData.get("outputFormat");
-    const outputFormat = String(outputFormatRaw || "").toLowerCase();
+export const getOutputFormat = (formatRaw) => {
+    const outputFormat = String(formatRaw || "").toLowerCase();
     if (!(outputFormat in formats)) {
         throw new Error("Выбран некорректный формат для конвертации");
     }
 
-    return formats[extension];
+    return formats[outputFormat];
 };
 
 export const processFilename = (file, outputFormat) => {
     const filename = (file.name || "").toLowerCase();
     const baseName = filename.includes('.') ? filename.substring(0, filename.lastIndexOf('.')) : filename;
+
     return `${baseName}.${outputFormat.toLowerCase()}`;
 };
 

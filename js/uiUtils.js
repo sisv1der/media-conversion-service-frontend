@@ -1,6 +1,8 @@
 const appendListItem = (list, value) => {
     const li = document.createElement('li');
+    li.setAttribute('data-format', value)
     li.textContent = value;
+
     list.appendChild(li);
 }
 
