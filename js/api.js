@@ -1,7 +1,7 @@
 const API_ENDPOINT = 'http://localhost:8080';
 
 export const convertFile = async (formData) => {
-    const CONVERSION_ENDPOINT = API_ENDPOINT + '/convert';
+    const CONVERSION_ENDPOINT = API_ENDPOINT + '/api/v1/convert';
 
     const response = await fetch(CONVERSION_ENDPOINT, {
         method: 'POST',
